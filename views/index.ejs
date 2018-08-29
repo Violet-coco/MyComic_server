@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>漫画展示-我的漫画</title>
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="horizontal-menu-page">
+
+<section>
+    <!--sidebar nav start-->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index">
+                    <img src="images/logo.png" alt="">
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index">漫画展示</a></li>
+                    <li><a href="insertComic">漫画上架</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">分类管理<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="changeType">类型管理</a></li>
+                            <li><a href="changeSort">分类管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="UploadImages">图片上传</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Form Components <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Form Elements</a></li>
+                            <li><a href="#">Advanced Components</a></li>
+                            <li><a href="#">Form Wizard</a></li>
+                            <li><a href="#">Form Validation</a></li>
+                            <li><a href="#">Dropzone</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                        </form>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img alt=""
+                                                                                         src="images/photos/user-avatar.png">
+                            John Doe <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Settings</a></li>
+                            <li><a href="#">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!--sidebar nav end-->
+
+    <!--body wrapper start-->
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        MyComic
+                        <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                             </span>
+                    </header>
+                    <div class="panel-body">
+
+                        <ul id="filters" class="media-filter">
+                            <li><a href="#" data-filter="*"> All</a></li>
+
+                            <%
+                            typeName.forEach(function (typeName) { %>
+                            <li><a href="#" data-filter=".<%= typeName.TypeName %>"><%= typeName.TypeName %></a></li>
+                            <% }) %>
+                        </ul>
+
+                        <div class="btn-group pull-right">
+                            <a href="insertComic" class="btn btn-primary btn-sm">
+                                <i class="fa fa-folder-open"></i> Add New
+                            </a>
+                        </div>
+                        <div id="gallery" class="media-gal">
+                            <% mycomic.forEach(function (mycomic) { %>
+                            <div class="<%= mycomic.type %> item ">
+                                <a href="#myModal<%= mycomic.id %>" data-toggle="modal">
+                                    <img src="<%= mycomic.details %> " alt=""/>
+                                </a>
+                                <p><%= mycomic.name %> </p>
+                            </div>
+                            <!-- Modal -->
+                            <form action="index" method="get">
+                                <div class="modal fade" id="myModal<%= mycomic.id %>" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title">Edit MyComic</h4>
+                                            </div>
+                                            <div class="modal-body row">
+                                                <div class="col-md-5 img-modal">
+                                                    <img src="<%= mycomic.details %> " alt="">
+                                                    <a href="#" class="btn btn-white btn-sm"><i
+                                                                class="fa fa-pencil"></i>
+                                                        Edit
+                                                        Image</a>
+                                                    <a href="#" class="btn btn-white btn-sm"><i class="fa fa-eye"></i>
+                                                        View
+                                                        Full
+                                                        Size</a>
+
+                                                    <p class="mtop10"><strong>Name:</strong><%= mycomic.name %></p>
+                                                    <p><strong>Author:</strong><%= mycomic.author %></p>
+                                                    <p><strong>Type:</strong><%= mycomic.type %></p>
+                                                    <p><strong>Sort:</strong><%= mycomic.sort1 %></p>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="form-group">
+                                                        <label> Name</label>
+                                                        <input id="name" value="<%= mycomic.name %>"
+                                                               class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label> Author</label>
+                                                        <input id="author" value="<%= mycomic.author %>"
+                                                               class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label> Description</label>
+                                                        <textarea rows="2"
+                                                                  class="form-control"><%= mycomic.introduction %></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label> Link URL</label>
+                                                        <input id="link" value="<%= mycomic.details %>"
+                                                               class="form-control">
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a href="javascript:void(0);" class="btn btn-danger btn-sm"
+                                                           type="botton"
+                                                           data-dismiss="modal" aria-hidden="true"
+                                                           onclick="Delete(<%= mycomic.id %>)">Delete
+                                                        </a>
+                                                        <a href="#changeComic<%= mycomic.id %>"
+                                                           class="btn btn-success btn-sm" data-dismiss="modal"
+                                                           data-toggle="modal" aria-hidden="true">changes
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <div class="modal fade" id="changeComic<%= mycomic.id %>" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">
+                                                &times;
+                                            </button>
+                                            <h4 class="modal-title">Edit MyComic</h4>
+                                        </div>
+                                        <div class="modal-body row">
+                                            <div class="col-lg-12">
+                                                <section class="panel">
+                                                    <header class="panel-heading">
+                                                        漫画信息
+                                                    </header>
+                                                    <div class="panel-body">
+                                                        <form role="form" method="post" action="/changeComic">
+                                                            <input type="text" style="display: none;" name="index"
+                                                                   value="<%= mycomic.id %>">
+                                                            <div class="form-group">
+                                                                <label for="name">名称</label>
+                                                                <input type="text" class="form-control" name="name"
+                                                                       id="name" placeholder="请输入漫画名称"
+                                                                       value="<%= mycomic.name %>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="author">作者</label>
+                                                                <input style="margin-bottom: 15px;" type="text"
+                                                                       class="form-control" name="author" id="author"
+                                                                       placeholder="请输入主笔"
+                                                                       value="<%= mycomic.author %>">
+                                                                <input style="margin-bottom: 15px;" type="text"
+                                                                       class="form-control" name="author2" id="author2"
+                                                                       placeholder="请输入作者2"
+                                                                       value="<%= mycomic.author2 %>">
+                                                                <input style="margin-bottom: 15px;" type="text"
+                                                                       class="form-control" name="author3" id="author3"
+                                                                       placeholder="请输入作者3"
+                                                                       value="<%= mycomic.author3 %>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="hot">热度</label><!--后续将会删除-->
+                                                                <input type="text" class="form-control" name="hot"
+                                                                       id="hot" placeholder="请输入热度"
+                                                                       value="<%= mycomic.hot %>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="popular">人气值</label>
+                                                                <input type="text" class="form-control" name="popular"
+                                                                       id="popular" placeholder="请输入人气值"
+                                                                       value="<%= mycomic.popular %>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="comment">评论条数</label>
+                                                                <input type="text" class="form-control" name="comment"
+                                                                       id="comment" placeholder="请输入评论条数"
+                                                                       value="<%= mycomic.comment %>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="attention">关注人数</label>
+                                                                <input type="text" class="form-control" name="attention"
+                                                                       id="attention" placeholder="请输入关注人数"
+                                                                       value="<%= mycomic.attention %>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="likes">点赞人数</label>
+                                                                <input type="text" class="form-control" name="likes"
+                                                                       id="likes" placeholder="请输入点赞人数"
+                                                                       value="<%= mycomic.likes %>">
+                                                            </div>
+                                                            <div class="form-group" id="addsort">
+                                                                <label for="sort">分类</label>
+                                                                <a href="javascript:void(0);"
+                                                                   class="btn btn-primary pull-right"
+                                                                   id="addselect">+</a>
+                                                                <% if(mycomic.sort1 != null){ %>
+                                                                <select class="form-control m-bot15 pull-right"
+                                                                        name="sort1" id="sort1">
+                                                                    <% sortName.forEach(function (sortName) {
+                                                                    if(mycomic.sort1 == sortName.name){ %>
+                                                                    <option value="<%= sortName.name %>"
+                                                                            selected><%= sortName.name %></option>
+                                                                    <%
+                                                                    }
+                                                                    else{
+                                                                    %>
+                                                                    <option value="<%= sortName.name %>"><%= sortName.name %></option>
+                                                                    <%
+                                                                    }
+                                                                    }) %>
+                                                                </select>
+                                                                <% }if(mycomic.sort2 != null){ %>
+                                                                <select class="form-control m-bot15 pull-right"
+                                                                        name="sort2" id="sort2">
+                                                                    <% sortName.forEach(function (sortName) {
+                                                                    if(mycomic.sort2 == sortName.name){ %>
+                                                                    <option value="<%= sortName.name %>"
+                                                                            selected><%= sortName.name %></option>
+                                                                    <%
+                                                                    }
+                                                                    else{
+                                                                    %>
+                                                                    <option value="<%= sortName.name %>"><%= sortName.name %></option>
+                                                                    <%
+                                                                    }
+                                                                    }) %>
+                                                                </select>
+                                                                <% }if(mycomic.sort3 != null){ %>
+                                                                <select class="form-control m-bot15 pull-right"
+                                                                        name="sort3" id="sort3">
+                                                                    <% sortName.forEach(function (sortName) {
+                                                                    if(mycomic.sort2 == sortName.name){ %>
+                                                                    <option value="<%= sortName.name %>"
+                                                                            selected><%= sortName.name %></option>
+                                                                    <%
+                                                                    }
+                                                                    else{
+                                                                    %>
+                                                                    <option value="<%= sortName.name %>"><%= sortName.name %></option>
+                                                                    <%
+                                                                    }
+                                                                    }) %>
+                                                                </select>
+                                                                <% } %>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="type">类型</label>
+                                                                <select class="form-control m-bot15" name="type"
+                                                                        id="type">
+                                                                    <% typeName.forEach(function (typeName) {
+                                                                    if(mycomic.sort1 == typeName.TypeName){ %>
+                                                                    <option value="<%= typeName.TypeName %>"
+                                                                            selected><%= typeName.TypeName %></option>
+                                                                    <%
+                                                                    }
+                                                                    else{
+                                                                    %>
+                                                                    <option value="<%= typeName.TypeName %>"><%= typeName.TypeName %></option>
+                                                                    <%
+                                                                    }}) %>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="ImgUrl">图片地址</label>
+                                                                <input style="margin-bottom: 15px;" type="text"
+                                                                       class="form-control" name="detailsImgUrl"
+                                                                       id="detailsImgUrl" placeholder="请输入详情图片地址"
+                                                                       value="<%= mycomic.details %>">
+                                                                <input style="margin-bottom: 15px;" type="text"
+                                                                       class="form-control" name="detailsImgUrl"
+                                                                       id="largeImgUrl" placeholder="请输入轮播图图片地址"
+                                                                       value="<%= mycomic.details %>">
+                                                                <input style="margin-bottom: 15px;" type="text"
+                                                                       class="form-control" name="intervalImgUrl"
+                                                                       id="intervalImgUrl" placeholder="请输入间隔图片地址"
+                                                                       value="<%= mycomic.intervals %>">
+                                                                <input style="margin-bottom: 15px;" type="text"
+                                                                       class="form-control" name="recommendImgUrl"
+                                                                       id="recommendImgUrl" placeholder="请输入佳作推荐图片地址"
+                                                                       value="<%= mycomic.recommend %>">
+                                                                <input style="margin-bottom: 15px;" type="text"
+                                                                       class="form-control" name="indexImgUrl"
+                                                                       id="indexImgUrl" placeholder="请输入首页展示图片地址"
+                                                                       value="<%= mycomic.indexother %>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="state">状态</label>
+                                                                <select class="form-control m-bot15" name="state"
+                                                                        id="state">
+                                                                    <% if(mycomic.state == 0){ %>
+                                                                    <option value="0">连载</option>
+                                                                    <% }
+                                                                    else if(mycomic.state == 1){ %>
+                                                                    <option value="1">完结</option>
+                                                                    <% }
+                                                                    else { %>
+                                                                    <option value="4">断更</option>
+                                                                    <% }
+                                                                    %>
+
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="count">话数</label>
+                                                                <input type="text" class="form-control" name="count"
+                                                                       id="count" placeholder="请输入当前总话数"
+                                                                       value="<%= mycomic.count %>">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="introduction">简介</label>
+                                                                <textarea rows="6" class="form-control"
+                                                                          name="introduction"
+                                                                          id="introduction"
+                                                                          value="<%= mycomic.introduction %>"></textarea>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">提交</button>
+                                                        </form>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- modal -->
+                            <% }) %>
+                        </div>
+                        <div class="col-md-12 text-center clearfix">
+                            <ul class="pagination">
+                                <li><a href="#">«</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!--body wrapper end-->
+
+    <!--footer section start-->
+    <footer class="sticky-footer">
+        Footer contents goes here
+    </footer>
+    <!--footer section end-->
+
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+<script src="js/jquery.isotope.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var $container = $('#gallery');
+        $container.isotope({
+            itemSelector: '.item',
+            animationOptions: {
+                duration: 750,
+                easing: 'linear',
+                queue: false
+            }
+        });
+
+        // filter items when filter link is clicked
+        $('#filters a').click(function () {
+            var selector = $(this).attr('data-filter');
+            $container.isotope({filter: selector});
+            return false;
+        });
+    });
+
+
+    function Delete(id) {
+        $.post("/deleteindex",
+            {
+                id: id,
+            }, function (data, status) {
+                // alert("数据:" + data + ";状态:" + status);
+            });
+
+    }
+
+    $(function () {
+        var i = 1;
+        $("#addselect").click(function () {
+            if (i < 3) {
+                var $select = $("<select class='form-control m-bot15 pull-right' name='sort" + i + "' id='sort'><% sortName.forEach(function (sortName) { %><option value='<%= sortName.name %>'><%= sortName.name %></option><% }) %></select>");
+                $("#addsort").append($select);
+                i++;
+            }
+        });
+
+    })
+</script>
+</body>
+</html>
